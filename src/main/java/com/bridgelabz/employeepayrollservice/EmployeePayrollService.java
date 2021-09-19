@@ -33,7 +33,18 @@ public class EmployeePayrollService {
             new EmployeePayrollFileIOService().writeData(employeePayrollList);
         }
     }
-
+    
+    public void printData(I0Service ioService) {
+		if(ioService.equals(I0Service.FILE_I0)) {
+			new EmployeePayrollFileIOService().printData();
+		}
+	}
+	public long countEntries(I0Service ioService) {
+		if(ioService.equals(I0Service.FILE_I0)) {
+			return new EmployeePayrollFileIOService().countEntries();
+		}
+		return 0;
+	}
   
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();

@@ -10,7 +10,7 @@ public class EmployeePayrollService {
         CONSOLE_IO, FILE_I0, DB_I0, REST_I0
     }
 
-    private List<EmployeePayrollData> employeePayrollList;
+    public List<EmployeePayrollData> employeePayrollList;
 
     public EmployeePayrollService(ArrayList<EmployeePayrollData> employeePayrollList) {
         this.employeePayrollList = employeePayrollList;
@@ -25,6 +25,10 @@ public class EmployeePayrollService {
         double salary = consoleInputReader.nextDouble();
         employeePayrollList.add(new EmployeePayrollData(id, name, salary));
     }
+    
+    public void writeEmployeePayrollData() {
+		System.out.println("\nWriting Employee Payroll to Console\n" + employeePayrollList);
+	}
 
   
     public static void main(String[] args) {
@@ -32,6 +36,7 @@ public class EmployeePayrollService {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
         Scanner consoleInputReader = new Scanner(System.in);
         employeePayrollService.readEmployeePayrollData(consoleInputReader);
+        employeePayrollService.writeEmployeePayrollData();
     }
 } 
 

@@ -1,3 +1,1 @@
-Employee Data [id=1, name=Jeff Bezos, salary=100000.0]
-Employee Data [id=2, name=Bill Gates, salary=200000.0]
-Employee Data [id=3, name=Mark Zuckerberg, salary=300000.0]
+id=1, name=54, salary=6564.0

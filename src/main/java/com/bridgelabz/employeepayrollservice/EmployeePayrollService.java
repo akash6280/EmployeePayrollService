@@ -16,7 +16,11 @@ public class EmployeePayrollService {
         this.employeePayrollList = list;
     }
     
-    public void readEmployeePayrollData(Scanner consoleInputReader) {
+     EmployeePayrollService() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void readEmployeePayrollData(Scanner consoleInputReader) {
         System.out.println("Enter Employee ID: ");
         int id = consoleInputReader.nextInt();
         System.out.println("Enter Employee Name: ");
@@ -45,13 +49,19 @@ public class EmployeePayrollService {
 		}
 		return 0;
 	}
-  
+	
+	public long readEmployeePayrollData(I0Service ioservice) {
+		if(ioservice.equals(I0Service.FILE_I0))
+			this.employeePayrollList=new EmployeePayrollFileIOService().readData();
+		return employeePayrollList.size();
+	}
+	
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
         Scanner consoleInputReader = new Scanner(System.in);
         employeePayrollService.readEmployeePayrollData(consoleInputReader);
-        employeePayrollService.writeEmployeePayrollData(I0Service.CONSOLE_IO);
+        employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
 } 
 

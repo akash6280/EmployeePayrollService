@@ -25,8 +25,7 @@ public class EmployeePayrollDBService {
 	public List<EmployeePayrollData> readData(){
 		String sql = "select * from employee_payroll";
 		List<EmployeePayrollData> employeePayrollList= new ArrayList<>();
-		try {
-			Connection connection =this.getConnection();
+		try(Connection connection =this.getConnection()) {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()) {

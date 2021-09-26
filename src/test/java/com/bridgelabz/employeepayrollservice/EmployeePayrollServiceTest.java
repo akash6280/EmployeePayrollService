@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollservice;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,4 +31,11 @@ public class EmployeePayrollServiceTest {
         long entries = employeePayrollService.readEmployeePayrollData(I0Service.FILE_I0);
         Assert.assertEquals(3, entries);
     }
+    
+    @Test
+	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount(){
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		long entries = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
+		Assert.assertEquals(3,entries);
+	}
 }

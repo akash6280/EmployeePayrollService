@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollservice;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,6 +54,8 @@ public class EmployeePayrollService {
 	public long readEmployeePayrollData(I0Service ioservice) {
 		if(ioservice.equals(I0Service.FILE_I0))
 			this.employeePayrollList=new EmployeePayrollFileIOService().readData();
+		if(ioservice.equals(I0Service.DB_I0))
+			this.employeePayrollList = new EmployeePayrollDBService().readData();
 		return employeePayrollList.size();
 	}
 	

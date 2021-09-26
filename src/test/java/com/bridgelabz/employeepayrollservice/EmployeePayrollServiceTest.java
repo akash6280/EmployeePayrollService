@@ -26,16 +26,10 @@ public class EmployeePayrollServiceTest {
     }
     
     @Test
-    public void givenFileOnReadingFromFileShouldMatchEmployeeCount() {
-        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        long entries = employeePayrollService.readEmployeePayrollData(I0Service.FILE_I0);
-        Assert.assertEquals(3, entries);
-    }
-    
-    @Test
 	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		long entries = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
-		Assert.assertEquals(3,entries);
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
+		Assert.assertEquals(4, employeePayrollData.size());
 	}
+    
 }

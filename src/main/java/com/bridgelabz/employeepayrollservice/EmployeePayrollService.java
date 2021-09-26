@@ -15,11 +15,12 @@ public class EmployeePayrollService {
     EmployeePayrollDBService employeePayrollDBService = new EmployeePayrollDBService();
 
     public EmployeePayrollService(List<EmployeePayrollData> list) {
+    	this();
         this.employeePayrollList = list;
     }
 
 	public EmployeePayrollService() {
-		// TODO Auto-generated constructor stub
+		employeePayrollDBService= EmployeePayrollDBService.getInstance();
 	}
 
 	public void readEmployeePayrollData(Scanner consoleInputReader) {
@@ -63,8 +64,7 @@ public class EmployeePayrollService {
 		return this.employeePayrollList;
 	}
 	
-	public void updateEmployeeSalary(String name, double salary) 
-	{
+	public void updateEmployeeSalary(String name, double salary) {
 		int result =employeePayrollDBService.updateEmployeeData(name, salary);
 		if(result==0) return;
 		EmployeePayrollData employeePayrollData=this.getEmployeePayrollData(name);
@@ -72,8 +72,7 @@ public class EmployeePayrollService {
 
 	}
 
-	private EmployeePayrollData getEmployeePayrollData(String name) 
-	{
+	private EmployeePayrollData getEmployeePayrollData(String name) {
 		EmployeePayrollData employeePayrollData;
 		 employeePayrollData=this.employeePayrollList.stream()
 							.filter(employeeDataItem->employeeDataItem.name.equals(name))
@@ -82,6 +81,10 @@ public class EmployeePayrollService {
 
 		return employeePayrollData;
 	}
+	public boolean checkEmployeePayrollInSyncWithDB(String name){
+		List<EmployeePayrollData> employeePayrollDataList=employeePayrollDBService.getEmployeePayrollDataFromDB(name);
+		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
+	}
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
@@ -89,6 +92,7 @@ public class EmployeePayrollService {
         employeePayrollService.readEmployeePayrollData(consoleInputReader);
         employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
+
 
 
 } 

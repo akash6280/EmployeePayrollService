@@ -16,8 +16,8 @@ public class EmployeePayrollService {
     public EmployeePayrollService(List<EmployeePayrollData> list) {
         this.employeePayrollList = list;
     }
-    
-     EmployeePayrollService() {
+
+	public EmployeePayrollService() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -51,14 +51,16 @@ public class EmployeePayrollService {
 		return 0;
 	}
 	
-	public long readEmployeePayrollData(I0Service ioservice) {
+	public long  readEmployeePayrollData(I0Service ioservice) {
 		if(ioservice.equals(I0Service.FILE_I0))
 			this.employeePayrollList=new EmployeePayrollFileIOService().readData();
-		if(ioservice.equals(I0Service.DB_I0))
-			this.employeePayrollList = new EmployeePayrollDBService().readData();
 		return employeePayrollList.size();
 	}
-	
+	public List<EmployeePayrollData> readEmployeePayrollDBData(I0Service ioService) {
+		if(ioService.equals(I0Service.DB_I0))
+			this.employeePayrollList = new EmployeePayrollDBService().readData();
+		return this.employeePayrollList;
+	}
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);

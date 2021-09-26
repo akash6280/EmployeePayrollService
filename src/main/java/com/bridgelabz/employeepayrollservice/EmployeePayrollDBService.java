@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +23,18 @@ public class EmployeePayrollDBService {
 	}
 
 	public List<EmployeePayrollData> readData(){
-		String sql = "select p.emp_id, e.employee_name, p.basic_pay from employee e, payroll p  where e.id=p.emp_id";
+		String sql = "select * from employee_payroll";
 		List<EmployeePayrollData> employeePayrollList= new ArrayList<>();
 		try {
 			Connection connection =this.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()) {
-				int id=result.getInt("emp_id");
-				String name = result.getString("employee_name");
+				int id=result.getInt("id");
+				String name = result.getString("name");
 				Double salary=result.getDouble("basic_pay");
-				employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+				LocalDate startDate = result.getDate("start").toLocalDate();
+				employeePayrollList.add(new EmployeePayrollData(id, name, salary,startDate));
 			}
 
 		}catch(SQLException e) {

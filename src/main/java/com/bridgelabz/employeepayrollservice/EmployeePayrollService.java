@@ -12,6 +12,7 @@ public class EmployeePayrollService {
     }
 
     public List<EmployeePayrollData> employeePayrollList;
+    EmployeePayrollDBService employeePayrollDBService = new EmployeePayrollDBService();
 
     public EmployeePayrollService(List<EmployeePayrollData> list) {
         this.employeePayrollList = list;
@@ -61,6 +62,26 @@ public class EmployeePayrollService {
 			this.employeePayrollList = new EmployeePayrollDBService().readData();
 		return this.employeePayrollList;
 	}
+	
+	public void updateEmployeeSalary(String name, double salary) 
+	{
+		int result =employeePayrollDBService.updateEmployeeData(name, salary);
+		if(result==0) return;
+		EmployeePayrollData employeePayrollData=this.getEmployeePayrollData(name);
+		if(employeePayrollData!=null) employeePayrollData.salary=salary;
+
+	}
+
+	private EmployeePayrollData getEmployeePayrollData(String name) 
+	{
+		EmployeePayrollData employeePayrollData;
+		 employeePayrollData=this.employeePayrollList.stream()
+							.filter(employeeDataItem->employeeDataItem.name.equals(name))
+							.findFirst()
+							.orElse(null);
+
+		return employeePayrollData;
+	}
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
@@ -68,5 +89,7 @@ public class EmployeePayrollService {
         employeePayrollService.readEmployeePayrollData(consoleInputReader);
         employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
+
+
 } 
 

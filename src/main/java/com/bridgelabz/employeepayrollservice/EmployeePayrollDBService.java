@@ -209,6 +209,25 @@ public class EmployeePayrollDBService {
 		return genderSalaryMap;
 	}
 
+	public Map<String, Double> getMaximumSalaryBasedOnGender() {
+		Map<String, Double> genderSalaryMap = new HashMap<String, Double>();
+		String sql="SELECT gender,MAX(basic_pay) FROM employee_payroll GROUP BY gender";
+
+		try (Connection connection = this.getConnection()){
+			Statement statement=connection.createStatement();
+			ResultSet resultSet=statement.executeQuery(sql);
+			while(resultSet.next()){
+				String gender=resultSet.getString("gender");
+				double salarySum=resultSet.getDouble("MAX(basic_pay)");
+				genderSalaryMap.put(gender, salarySum);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return genderSalaryMap;
+	}
+
 
 
 

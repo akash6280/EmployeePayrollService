@@ -24,15 +24,27 @@ public class EmployeePayrollService {
 		employeePayrollDBService= EmployeePayrollDBService.getInstance();
 	}
 
-	public void readEmployeePayrollData(Scanner consoleInputReader) {
-        System.out.println("Enter Employee ID: ");
+	public List<EmployeePayrollData> readEmployeePayrollData(I0Service ioService) {
+        if(ioService.equals(I0Service.CONSOLE_IO))
+			this.employeePayrollList=new EmployeePayrollService().readData();
+        if(ioService.equals(I0Service.FILE_I0))
+    		this.employeePayrollList=new EmployeePayrollFileIOService().readData();
+        if(ioService.equals(I0Service.DB_I0))
+    		this.employeePayrollList = new EmployeePayrollDBService().readData();
+    		return this.employeePayrollList;
+    	}
+    	
+    private List<EmployeePayrollData> readData() {
+    	Scanner consoleInputReader = new Scanner(System.in);
+    	System.out.println("Enter Employee ID: ");
         int id = consoleInputReader.nextInt();
         System.out.println("Enter Employee Name: ");
         String name = consoleInputReader.next();
         System.out.println("Enter Employee Salary: ");
         double salary = consoleInputReader.nextDouble();
         employeePayrollList.add(new EmployeePayrollData(id, name, salary));
-    }
+        return this.employeePayrollList;
+	}
     
     void writeEmployeePayrollData(I0Service ioservice) {
         if (ioservice.equals(I0Service.CONSOLE_IO))
@@ -54,17 +66,6 @@ public class EmployeePayrollService {
 		return 0;
 	}
 	
-	public long  readEmployeePayrollData(I0Service ioservice) {
-		if(ioservice.equals(I0Service.FILE_I0))
-			this.employeePayrollList=new EmployeePayrollFileIOService().readData();
-		return employeePayrollList.size();
-	}
-	public List<EmployeePayrollData> readEmployeePayrollDBData(I0Service ioService) {
-		if(ioService.equals(I0Service.DB_I0))
-			this.employeePayrollList = new EmployeePayrollDBService().readData();
-		return this.employeePayrollList;
-	}
-	
 	public void updateEmployeeSalary(String name, double salary) {
 		int result =employeePayrollDBService.updateEmployeeData(name, salary);
 		if(result==0) return;
@@ -82,6 +83,7 @@ public class EmployeePayrollService {
 
 		return employeePayrollData;
 	}
+	
 	public boolean checkEmployeePayrollInSyncWithDB(String name){
 		List<EmployeePayrollData> employeePayrollDataList=employeePayrollDBService.getEmployeePayrollDataFromDB(name);
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
@@ -89,8 +91,7 @@ public class EmployeePayrollService {
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
-        Scanner consoleInputReader = new Scanner(System.in);
-        employeePayrollService.readEmployeePayrollData(consoleInputReader);
+        employeePayrollService.readEmployeePayrollData(I0Service.CONSOLE_IO);
         employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
 

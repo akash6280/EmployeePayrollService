@@ -31,13 +31,13 @@ public class EmployeePayrollServiceTest {
     @Test
 	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
+		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
 		Assert.assertEquals(4, employeePayrollData.size());
 	}
     @Test
 	public void givenNewSalaryForEmployee_WhenUpdatedUsingStatement_ShouldSyncWithDB(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
+		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
 		employeePayrollService.updateEmployeeSalary("Terisa",3000000.00);
 		boolean result=employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
@@ -46,7 +46,7 @@ public class EmployeePayrollServiceTest {
     @Test
    	public void givenNewSalaryForEmployee_WhenUpdatedUsingPreparedStatement_ShouldSyncWithDB(){
    		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-   		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
+   		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
    		employeePayrollService.updateEmployeeSalary("Terisa",3000000.00);
    		boolean result=employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
    		Assert.assertTrue(result);
@@ -55,7 +55,7 @@ public class EmployeePayrollServiceTest {
     @Test
 	public void givenDateRangeForEmployee_WhenRetrieved_ShouldMatchEmployeeCount(){
     	EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		List<EmployeePayrollData> employeePayrollList = employeePayrollService.retriveEmployeeListForDateRange();
+		List<EmployeePayrollData> employeePayrollList = employeePayrollService.retriveEmployeeListForDateRange(I0Service.DB_I0);
 		List<EmployeePayrollData> expectedemployeePayrollList=new LinkedList<>();
 		expectedemployeePayrollList.add(new EmployeePayrollData(1, "mark", 2000000.00,LocalDate.of(2019,01, 03)));
 		expectedemployeePayrollList.add(new EmployeePayrollData(4,"Terisa", 3000000.00,LocalDate.of(2019,11, 13)));
@@ -68,7 +68,7 @@ public class EmployeePayrollServiceTest {
 		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
 		expectedGenderSalaryMap.put("F", 6000000.0);
 		expectedGenderSalaryMap.put("M", 3000000.0);
-		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getSalarySumBasedOnGender();
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getSalarySumBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
@@ -80,7 +80,7 @@ public class EmployeePayrollServiceTest {
 		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
 		expectedGenderSalaryMap.put("F", 2000000.0);
 		expectedGenderSalaryMap.put("M", 3000000.0);
-		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getAverageSalaryBasedOnGender();
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getAverageSalaryBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
@@ -91,7 +91,7 @@ public class EmployeePayrollServiceTest {
 		Map<String, Integer> expectedGenderSalaryMap = new HashMap<String,Integer>();
 		expectedGenderSalaryMap.put("F", 3);
 		expectedGenderSalaryMap.put("M", 1);
-		Map<String, Integer> actualgenderSalaryMap = employeePayrollService.getEmployeeCountBasedOnGender();
+		Map<String, Integer> actualgenderSalaryMap = employeePayrollService.getEmployeeCountBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
@@ -102,7 +102,7 @@ public class EmployeePayrollServiceTest {
 		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
 		expectedGenderSalaryMap.put("F", 1000000.00);
 		expectedGenderSalaryMap.put("M", 3000000.00);
-		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMinimumSalaryBasedOnGender();
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMinimumSalaryBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
@@ -113,7 +113,7 @@ public class EmployeePayrollServiceTest {
 		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
 		expectedGenderSalaryMap.put("F", 3000000.00);
 		expectedGenderSalaryMap.put("M", 3000000.00);
-		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMaximumSalaryBasedOnGender();
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMaximumSalaryBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}

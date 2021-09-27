@@ -190,6 +190,25 @@ public class EmployeePayrollDBService {
 		return genderSalaryMap;
 	}
 
+	public Map<String, Double> getMinimumSalaryBasedOnGender() {
+		Map<String, Double> genderSalaryMap = new HashMap<String, Double>();
+		String sql="SELECT gender,MIN(basic_pay) FROM employee_payroll GROUP BY gender";
+
+		try (Connection connection = this.getConnection()){
+			Statement statement=connection.createStatement();
+			ResultSet resultSet=statement.executeQuery(sql);
+			while(resultSet.next()){
+				String gender=resultSet.getString("gender");
+				double salarySum=resultSet.getDouble("MIN(basic_pay)");
+				genderSalaryMap.put(gender, salarySum);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return genderSalaryMap;
+	}
+
 
 
 

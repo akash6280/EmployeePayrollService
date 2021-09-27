@@ -114,6 +114,10 @@ public class EmployeePayrollService {
 		return new EmployeePayrollDBService().getMinimumSalaryBasedOnGender();
 	}
 
+	public Map<String, Double> getMaximumSalaryBasedOnGender() {
+		return new EmployeePayrollDBService().getMaximumSalaryBasedOnGender();
+	}
+
 
 
 } 

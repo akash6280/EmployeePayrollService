@@ -93,6 +93,10 @@ public class EmployeePayrollService {
         employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
 
+	public List<EmployeePayrollData> retriveEmployeeListForDateRange() {
+		return this.employeePayrollList=employeePayrollDBService.retriveEmployeeDetailForDateRange();
+	}
+
 
 
 } 

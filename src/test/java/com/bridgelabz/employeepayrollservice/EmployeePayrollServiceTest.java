@@ -75,7 +75,17 @@ public class EmployeePayrollServiceTest {
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
+    
+    @Test
+    public void givenEmployeePayrollInDB_ShouldRetrieveEmployeeCountWithGender(){
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		Map<String, Integer> expectedGenderSalaryMap = new HashMap<String,Integer>();
+		expectedGenderSalaryMap.put("F", 3);
+		expectedGenderSalaryMap.put("M", 1);
+		Map<String, Integer> actualgenderSalaryMap = employeePayrollService.getEmployeeCountBasedOnGender();
+		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
-
+	}
+    
     
 }

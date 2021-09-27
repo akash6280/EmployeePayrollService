@@ -87,5 +87,16 @@ public class EmployeePayrollServiceTest {
 
 	}
     
+    @Test
+    public void givenEmployeePayrollInDB_ShouldRetrieveEmployeeMinimumSalaryWithGender(){
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
+		expectedGenderSalaryMap.put("F", 1000000.00);
+		expectedGenderSalaryMap.put("M", 3000000.00);
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMinimumSalaryBasedOnGender();
+		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
+
+	}
+    
     
 }

@@ -99,7 +99,11 @@ public class EmployeePayrollService {
 	}
 
 	public Map<String, Double> getSalarySumBasedOnGender() {
-		return employeePayrollDBService.getSalarySumBasedOnGender();
+		return new EmployeePayrollDBService().getSalarySumBasedOnGender();
+	}
+
+	public Map<String, Double> getAverageSalaryBasedOnGender() {
+		return new EmployeePayrollDBService().getAverageSalaryBasedOnGender();
 	}
 
 

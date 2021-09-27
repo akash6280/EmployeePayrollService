@@ -106,6 +106,10 @@ public class EmployeePayrollService {
 		return new EmployeePayrollDBService().getAverageSalaryBasedOnGender();
 	}
 
+	public Map<String, Integer> getEmployeeCountBasedOnGender() {
+		return new EmployeePayrollDBService().getgetEmployeeCountBasedOnGender();
+	}
+
 
 
 } 

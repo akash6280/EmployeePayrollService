@@ -53,17 +53,29 @@ public class EmployeePayrollServiceTest {
 		Assert.assertEquals(expectedemployeePayrollList,employeePayrollList);
 	}
     
+    @Test
     public void givenEmployeePayrollInDB_ShouldRetrieveEmployeeSalarySumWithGender(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-
 		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
 		expectedGenderSalaryMap.put("F", 6000000.0);
 		expectedGenderSalaryMap.put("M", 3000000.0);
-
 		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getSalarySumBasedOnGender();
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
 	}
+    
+    
+    @Test
+    public void givenEmployeePayrollInDB_ShouldRetrieveEmployeeAvgSalaryWithGender(){
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
+		expectedGenderSalaryMap.put("F", 2000000.0);
+		expectedGenderSalaryMap.put("M", 3000000.0);
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getAverageSalaryBasedOnGender();
+		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
+
+	}
+
 
     
 }

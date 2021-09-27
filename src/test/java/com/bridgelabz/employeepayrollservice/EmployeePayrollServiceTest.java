@@ -1,8 +1,9 @@
 package com.bridgelabz.employeepayrollservice;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-
+import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,13 +33,22 @@ public class EmployeePayrollServiceTest {
 		Assert.assertEquals(4, employeePayrollData.size());
 	}
     @Test
-	public void givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB()
-	{
+	public void givenNewSalaryForEmployee_WhenUpdated_ShouldSyncWithDB(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-		List<EmployeePayrollData> employeePyrollList = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
+		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollDBData(I0Service.DB_I0);
 		employeePayrollService.updateEmployeeSalary("Terisa",3000000.00);
 		boolean result=employeePayrollService.checkEmployeePayrollInSyncWithDB("Terisa");
 		Assert.assertTrue(result);
+	}
+    
+    @Test
+	public void givenDateRangeForEmployee_WhenRetrieved_ShouldMatchEmployeeCount(){
+    	EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		List<EmployeePayrollData> employeePayrollList = employeePayrollService.retriveEmployeeListForDateRange();
+		List<EmployeePayrollData> expectedemployeePayrollList=new LinkedList<>();
+		expectedemployeePayrollList.add(new EmployeePayrollData(1, "mark", 20.0,LocalDate.of(2019,01, 03)));
+		expectedemployeePayrollList.add(new EmployeePayrollData(4,"Terisa", 3000000.00,LocalDate.of(2019,11, 13)));
+		Assert.assertEquals(expectedemployeePayrollList,employeePayrollList);
 	}
     
 }

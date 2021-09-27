@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.bridgelabz.employeepayrollservice.EmployeePayrollService.I0Service;
+
 public class EmployeePayrollService {
 
     public enum I0Service {
@@ -95,28 +97,38 @@ public class EmployeePayrollService {
         employeePayrollService.writeEmployeePayrollData(I0Service.FILE_I0);
     }
 
-	public List<EmployeePayrollData> retriveEmployeeListForDateRange() {
+	public List<EmployeePayrollData> retriveEmployeeListForDateRange(I0Service ioService) {
 		return this.employeePayrollList=employeePayrollDBService.retriveEmployeeDetailForDateRange();
 	}
 
-	public Map<String, Double> getSalarySumBasedOnGender() {
+	public Map<String, Double> getSalarySumBasedOnGender(I0Service ioService) {
+		if(ioService==I0Service.DB_I0)
 		return new EmployeePayrollDBService().getSalarySumBasedOnGender();
+		return null;
 	}
 
-	public Map<String, Double> getAverageSalaryBasedOnGender() {
+	public Map<String, Double> getAverageSalaryBasedOnGender(I0Service ioService) {
+		if(ioService==I0Service.DB_I0)
 		return new EmployeePayrollDBService().getAverageSalaryBasedOnGender();
+		return null;
 	}
 
-	public Map<String, Integer> getEmployeeCountBasedOnGender() {
+	public Map<String, Integer> getEmployeeCountBasedOnGender(I0Service ioService) {
+		if(ioService==I0Service.DB_I0)
 		return new EmployeePayrollDBService().getgetEmployeeCountBasedOnGender();
+		return null;
 	}
 
-	public Map<String, Double> getMinimumSalaryBasedOnGender() {
+	public Map<String, Double> getMinimumSalaryBasedOnGender(I0Service ioService) {
+		if(ioService==I0Service.DB_I0)
 		return new EmployeePayrollDBService().getMinimumSalaryBasedOnGender();
+		return null;
 	}
 
-	public Map<String, Double> getMaximumSalaryBasedOnGender() {
+	public Map<String, Double> getMaximumSalaryBasedOnGender(I0Service ioService) {
+		if(ioService==I0Service.DB_I0)
 		return new EmployeePayrollDBService().getMaximumSalaryBasedOnGender();
+		return null;
 	}
 
 

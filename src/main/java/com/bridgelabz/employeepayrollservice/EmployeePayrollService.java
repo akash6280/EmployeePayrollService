@@ -110,6 +110,10 @@ public class EmployeePayrollService {
 		return new EmployeePayrollDBService().getgetEmployeeCountBasedOnGender();
 	}
 
+	public Map<String, Double> getMinimumSalaryBasedOnGender() {
+		return new EmployeePayrollDBService().getMinimumSalaryBasedOnGender();
+	}
+
 
 
 } 

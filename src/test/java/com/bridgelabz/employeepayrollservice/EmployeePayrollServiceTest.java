@@ -1,8 +1,10 @@
 package com.bridgelabz.employeepayrollservice;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,9 +48,22 @@ public class EmployeePayrollServiceTest {
     	EmployeePayrollService employeePayrollService = new EmployeePayrollService();
 		List<EmployeePayrollData> employeePayrollList = employeePayrollService.retriveEmployeeListForDateRange();
 		List<EmployeePayrollData> expectedemployeePayrollList=new LinkedList<>();
-		expectedemployeePayrollList.add(new EmployeePayrollData(1, "mark", 20.0,LocalDate.of(2019,01, 03)));
+		expectedemployeePayrollList.add(new EmployeePayrollData(1, "mark", 2000000.00,LocalDate.of(2019,01, 03)));
 		expectedemployeePayrollList.add(new EmployeePayrollData(4,"Terisa", 3000000.00,LocalDate.of(2019,11, 13)));
 		Assert.assertEquals(expectedemployeePayrollList,employeePayrollList);
 	}
+    
+    public void givenEmployeePayrollInDB_ShouldRetrieveEmployeeSalarySumWithGender(){
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+
+		Map<String, Double> expectedGenderSalaryMap = new HashMap<String, Double>();
+		expectedGenderSalaryMap.put("F", 6000000.0);
+		expectedGenderSalaryMap.put("M", 3000000.0);
+
+		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getSalarySumBasedOnGender();
+		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
+
+	}
+
     
 }

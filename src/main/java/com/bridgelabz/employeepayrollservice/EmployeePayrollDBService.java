@@ -111,6 +111,26 @@ public class EmployeePayrollDBService {
             e.printStackTrace();
         }
     }
+    public List<EmployeePayrollData> retriveEmployeeDetailForDateRange(){
+		String sql = "select * from employee_payroll where start between cast('2019-01-03' as date) and cast('2020-01-02' as date) ";
+		List<EmployeePayrollData> employeePayrollList= new ArrayList<>();
+		try(Connection connection =this.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()) {
+				int id=result.getInt("id");
+				String name = result.getString("name");
+				Double salary=result.getDouble("basic_pay");
+				LocalDate startDate = result.getDate("start").toLocalDate();
+				employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+			}
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollList;
+	}
+
 
 
 }

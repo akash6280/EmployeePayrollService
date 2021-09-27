@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EmployeePayrollDBService {
-	
+	private PreparedStatement employeePayrollDataStatementToUpdate;
 	private PreparedStatement employeePayrollDataStatement;
     private static EmployeePayrollDBService employeePayrollDBService;
 
@@ -61,8 +61,30 @@ public class EmployeePayrollDBService {
 	}
 
 	public int updateEmployeeData(String name, double salary) {
-		return this.updateEmployeeDataUsingStatement(name,salary);
+		return this.updateEmployeeDataUsingPreparedStatement(name,salary);
 	}
+
+	private int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+	        if (this.employeePayrollDataStatementToUpdate == null)
+	            this.prepareStatementForUpdatingEmployeeData();
+	        try {
+	            employeePayrollDataStatementToUpdate.setDouble(1, salary);
+	            employeePayrollDataStatementToUpdate.setString(2, name);
+	            return employeePayrollDataStatementToUpdate.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+			return 0;
+	}
+	private void prepareStatementForUpdatingEmployeeData() {
+        try {
+            Connection connection = this.getConnection();
+            String sql ="update employee_payroll set basic_pay=? where name =?";
+            employeePayrollDataStatementToUpdate = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 	private int updateEmployeeDataUsingStatement(String name, double salary) {
 		 String sql = String.format("update employee_payroll set basic_pay= %.2f where name ='%s';", salary, name);

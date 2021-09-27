@@ -135,8 +135,7 @@ public class EmployeePayrollDBService {
     
     public Map<String, Double> getSalarySumBasedOnGender(){
 		Map<String, Double> genderSalaryMap = new HashMap<String, Double>();
-
-		String sql="SELECT gender,SUM(basic_pay) FROM payroll_service GROUP BY gender";
+		String sql="SELECT gender,SUM(basic_pay) FROM employee_payroll GROUP BY gender";
 
 		try (Connection connection = this.getConnection()){
 			Statement statement=connection.createStatement();
@@ -144,6 +143,26 @@ public class EmployeePayrollDBService {
 			while(resultSet.next()){
 				String gender=resultSet.getString("gender");
 				double salarySum=resultSet.getDouble("SUM(basic_pay)");
+				genderSalaryMap.put(gender, salarySum);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return genderSalaryMap;
+	}
+
+	public Map<String, Double> getAverageSalaryBasedOnGender() {
+		Map<String, Double> genderSalaryMap = new HashMap<String, Double>();
+
+		String sql="SELECT gender,AVG(basic_pay) FROM employee_payroll GROUP BY gender";
+
+		try (Connection connection = this.getConnection()){
+			Statement statement=connection.createStatement();
+			ResultSet resultSet=statement.executeQuery(sql);
+			while(resultSet.next()){
+				String gender=resultSet.getString("gender");
+				double salarySum=resultSet.getDouble("AVG(basic_pay)");
 				genderSalaryMap.put(gender, salarySum);
 			}
 		} 

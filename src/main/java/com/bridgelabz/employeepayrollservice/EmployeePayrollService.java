@@ -3,6 +3,7 @@ package com.bridgelabz.employeepayrollservice;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
@@ -95,6 +96,10 @@ public class EmployeePayrollService {
 
 	public List<EmployeePayrollData> retriveEmployeeListForDateRange() {
 		return this.employeePayrollList=employeePayrollDBService.retriveEmployeeDetailForDateRange();
+	}
+
+	public Map<String, Double> getSalarySumBasedOnGender() {
+		return employeePayrollDBService.getSalarySumBasedOnGender();
 	}
 
 

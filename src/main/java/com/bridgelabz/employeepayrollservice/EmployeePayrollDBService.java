@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.Date;  
 
 import com.bridgelabz.employeepayrollservice.EmployeePayrollException.ExceptionType;
 
@@ -60,6 +61,25 @@ public class EmployeePayrollDBService {
 			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return employeePayrollList;
+	}
+	
+	public EmployeePayrollData addEmployeeToPayroll(String name, double salary, LocalDate startDate, char gender) {
+		int employeeId = -1;
+		EmployeePayrollData employeePayrollData = null;
+		String sql = String.format("insert into employee_payroll(name,basic_pay, start,gender) values('%s','%s','%s','%c' )", name,salary, Date.valueOf(startDate),gender );
+		try(Connection connection = this.getConnection()){
+			Statement statement = connection.createStatement();
+			int rowAffected = statement.executeUpdate(sql,statement.RETURN_GENERATED_KEYS);
+			if(rowAffected == 1) {
+				ResultSet resultSet = statement.getGeneratedKeys();
+				if(resultSet.next())
+					employeeId = resultSet.getInt(1);
+			}
+			employeePayrollData = new EmployeePayrollData(employeeId, name, salary, startDate);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollData;
 	}
 
 	public int updateEmployeeData(String name, double salary) {
@@ -276,5 +296,6 @@ public class EmployeePayrollDBService {
 				throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 			}
 		}
+
 		
 	}

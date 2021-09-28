@@ -250,7 +250,17 @@ public class EmployeePayrollDBService {
 		return genderSalaryMap;
 	}
 
-
-
-
-}
+	public void writeData(List<EmployeePayrollData> employeePayrollList) {
+		EmployeePayrollData employee=employeePayrollList.get(0);
+			String sql = String.format("insert into employee_payroll (id,name,basic_pay,start) values ('%d','%s','%f','%s');",employee.id,employee.name,
+					     employee.salary,employee.startDate.toString());
+			try (Connection connection = this.getConnection()){
+				Statement statement = connection.createStatement();
+				statement.executeUpdate(sql);
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}

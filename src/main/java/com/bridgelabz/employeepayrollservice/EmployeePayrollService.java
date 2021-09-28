@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayrollservice;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,10 @@ public class EmployeePayrollService implements EmployeePayrollServiceIF {
 		return null;
 	}
 
+	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, char gender) {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name,salary,startDate, gender));
+		
+	}
 
 
 } 

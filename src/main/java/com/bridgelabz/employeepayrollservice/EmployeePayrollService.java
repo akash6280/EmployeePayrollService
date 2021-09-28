@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import com.bridgelabz.employeepayrollservice.EmployeePayrollService.I0Service;
 
-public class EmployeePayrollService {
+public class EmployeePayrollService implements EmployeePayrollServiceIF {
 
     public enum I0Service {
         CONSOLE_IO, FILE_I0, DB_I0, REST_I0
@@ -48,12 +48,13 @@ public class EmployeePayrollService {
         return this.employeePayrollList;
 	}
     
-    void writeEmployeePayrollData(I0Service ioservice) {
+    public void writeEmployeePayrollData(I0Service ioservice) {
         if (ioservice.equals(I0Service.CONSOLE_IO))
             System.out.println("\nWriting Employee Payroll to Console\n" + employeePayrollList);
-        else if (ioservice.equals(I0Service.FILE_I0)) {
-            new EmployeePayrollFileIOService().writeData(employeePayrollList);
-        }
+        if (ioservice.equals(I0Service.FILE_I0)) 
+            new EmployeePayrollFileIOService().writeData(this.employeePayrollList);
+        if (ioservice.equals(I0Service.DB_I0)) 
+            new EmployeePayrollDBService().writeData(this.employeePayrollList);
     }
     
     public void printData(I0Service ioService) {

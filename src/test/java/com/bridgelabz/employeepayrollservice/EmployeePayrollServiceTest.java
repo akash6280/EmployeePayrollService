@@ -118,5 +118,15 @@ public class EmployeePayrollServiceTest {
 
 	}
     
+    @Test
+    public void  givenEmployeePayrollInDB_WhenWrittenToDatabase_ShouldMatchEmployeeCount(){
+		EmployeePayrollData[] arrayOfEmployees= { new EmployeePayrollData(5, "Stark", 600000.0,LocalDate.of(2020,11, 13))};
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmployees));
+
+		employeePayrollService.writeEmployeePayrollData(I0Service.DB_I0);
+		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
+		Assert.assertEquals(5, employeePayrollList.size());
+	}
+   
     
 }

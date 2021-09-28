@@ -116,17 +116,15 @@ public class EmployeePayrollServiceTest {
 		Map<String, Double> actualgenderSalaryMap = employeePayrollService.getMaximumSalaryBasedOnGender(I0Service.DB_I0);
 		Assert.assertEquals(expectedGenderSalaryMap, actualgenderSalaryMap);
 
-	}
-    
-    @Test
-    public void  givenEmployeePayrollInDB_WhenWrittenToDatabase_ShouldMatchEmployeeCount(){
-		EmployeePayrollData[] arrayOfEmployees= { new EmployeePayrollData(5, "Stark", 600000.0,LocalDate.of(2020,11, 13))};
-		EmployeePayrollService employeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmployees));
+	} 
 
-		employeePayrollService.writeEmployeePayrollData(I0Service.DB_I0);
-		List<EmployeePayrollData> employeePayrollList = employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
-		Assert.assertEquals(5, employeePayrollList.size());
-	}
-   
+	@Test
+	public void givenNewEmployee_WhenAdded_ShouldSynWithDB() {
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+		employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
+		employeePayrollService.addEmployeeToPayroll("Clark", 5000000.00, LocalDate.now(), 'M');
+		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Clark");
+		Assert.assertTrue(result);
+		}
     
 }

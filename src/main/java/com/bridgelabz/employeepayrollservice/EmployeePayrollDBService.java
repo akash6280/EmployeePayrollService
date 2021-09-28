@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bridgelabz.employeepayrollservice.EmployeePayrollException.ExceptionType;
+
 public class EmployeePayrollDBService {
 	private PreparedStatement employeePayrollDataStatementToUpdate;
 	private PreparedStatement employeePayrollDataStatement;
@@ -55,7 +57,7 @@ public class EmployeePayrollDBService {
 			}
 
 		}catch(SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return employeePayrollList;
 	}
@@ -65,6 +67,8 @@ public class EmployeePayrollDBService {
 	}
 
 	private int updateEmployeeDataUsingPreparedStatement(String name, double salary) {
+			if(name.isBlank())
+			   throw new EmployeePayrollException(ExceptionType.NAME_EMPTY,"Name entered is empty");
 	        if (this.employeePayrollDataStatementToUpdate == null)
 	            this.prepareStatementForUpdatingEmployeeData();
 	        try {
@@ -72,7 +76,10 @@ public class EmployeePayrollDBService {
 	            employeePayrollDataStatementToUpdate.setString(2, name);
 	            return employeePayrollDataStatementToUpdate.executeUpdate();
 	        } catch (SQLException e) {
-	            e.printStackTrace();
+	            
+	        }
+	        catch (NullPointerException e) {
+	            throw new EmployeePayrollException(ExceptionType.NAME_NULL,"Name entered is null");
 	        }
 			return 0;
 	}
@@ -87,17 +94,22 @@ public class EmployeePayrollDBService {
     }
 
 	private int updateEmployeeDataUsingStatement(String name, double salary) {
+		if(name.isBlank())
+			   throw new EmployeePayrollException(ExceptionType.NAME_EMPTY,"Name entered is empty");
 		 String sql = String.format("update employee_payroll set basic_pay= %.2f where name ='%s';", salary, name);
 		try(Connection connection =this.getConnection()) {
 			Statement statement = connection.createStatement();
 			return statement.executeUpdate(sql);
 		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
+		}catch (NullPointerException e) {
+            throw new EmployeePayrollException(ExceptionType.NAME_NULL,"Name entered is null");
+        }
 	}
 	
 	public List<EmployeePayrollData> getEmployeePayrollDataFromDB(String name) {
+		if(name.isBlank())
+			throw new EmployeePayrollException(ExceptionType.NAME_EMPTY,"Name entered is empty");
         List<EmployeePayrollData> employeePayrollList = null;
         if (this.employeePayrollDataStatement == null)
             this.prepareStatementForEmployeeData();
@@ -107,6 +119,8 @@ public class EmployeePayrollDBService {
             employeePayrollList = this.getEmployeePayrollData(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            throw new EmployeePayrollException(ExceptionType.NAME_NULL,"Name entered is null");
         }
         return employeePayrollList;
     }
@@ -150,7 +164,7 @@ public class EmployeePayrollDBService {
 			}
 
 		}catch(SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return employeePayrollList;
 	}
@@ -169,7 +183,7 @@ public class EmployeePayrollDBService {
 			}
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return genderSalaryMap;
 	}
@@ -188,7 +202,7 @@ public class EmployeePayrollDBService {
 			}
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return genderSalaryMap;
 	}
@@ -207,7 +221,7 @@ public class EmployeePayrollDBService {
 			}
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return genderSalaryMap;
 	}
@@ -226,7 +240,7 @@ public class EmployeePayrollDBService {
 			}
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return genderSalaryMap;
 	}
@@ -245,7 +259,7 @@ public class EmployeePayrollDBService {
 			}
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 		}
 		return genderSalaryMap;
 	}
@@ -259,7 +273,7 @@ public class EmployeePayrollDBService {
 				statement.executeUpdate(sql);
 			}
 			catch(SQLException e) {
-				e.printStackTrace();
+				throw new EmployeePayrollException(ExceptionType.INCORRECT_QUERY,"Wrong query entered");
 			}
 		}
 		

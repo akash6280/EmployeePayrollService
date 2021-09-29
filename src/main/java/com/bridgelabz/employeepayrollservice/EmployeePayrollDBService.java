@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.sql.Date;  
+import java.util.stream.Collectors;
 
 import com.bridgelabz.employeepayrollservice.EmployeePayrollException.ExceptionType;
 
@@ -76,7 +77,7 @@ public class EmployeePayrollDBService {
 		return employeePayrollData;
 	}
      
-	public EmployeePayrollData addEmployeeToPayroll(int company_id,String name,long phoneNumber,String address,char gender,double salary,LocalDate startDate){
+	public EmployeePayrollData addEmployeeToPayroll(int company_id,String name,long phoneNumber,String address,char gender,double salary,LocalDate startDate, int departmentId, String is_active){
 		int employeeId = -1;
 		Connection connection = null;
 		EmployeePayrollData employeePayrollData = null;
@@ -89,7 +90,8 @@ public class EmployeePayrollDBService {
 
 		try (Statement statement = connection.createStatement()){
 
-			String sql = String.format("insert into employee (company_id,employee_name,phone_number,address,gender,basic_pay,start) VALUES ('%s', '%s', '%s','%s', '%s', '%s', '%s');",company_id,name,phoneNumber,address,gender,salary,Date.valueOf(startDate));
+			String sql = String.format("insert into employee (company_id,employee_name,phone_number,address,gender,basic_pay,start,is_active)"+
+				       	"VALUES ('%s', '%s', '%s','%s', '%s', '%s', '%s','%s');",company_id,name,phoneNumber,address,gender,salary,Date.valueOf(startDate),is_active);
 
 			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
 			if(rowAffected == 1) {
@@ -364,5 +366,19 @@ public class EmployeePayrollDBService {
 			}
 		}
 
+	public int deleteEmployee(String name, List<EmployeePayrollData> employeePayrollList) {
+			int result=0;
+			String sql = String.format("UPDATE employee SET is_active=\"false\" WHERE employee_name = '%s';",name);
+			try (Connection connection = this.getConnection()){
+				Statement statement=connection.createStatement();
+				result=statement.executeUpdate(sql);
+				employeePayrollList.stream().filter(employee->!employee.name.equals(name)).collect(Collectors.toList());
+				
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
 		
 	}
+}

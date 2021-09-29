@@ -133,9 +133,13 @@ public class EmployeePayrollService implements EmployeePayrollServiceIF {
 		return null;
 	}
 
-	public void addEmployeeToPayroll(int companyId,String name,long phoneNumber,String address,char gender,double salary,LocalDate date) {
-		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(companyId,name,phoneNumber,address,gender,salary,date));
+	public void addEmployeeToPayroll(int companyId,String name,long phoneNumber,String address,char gender,double salary,LocalDate date, int departmentId, String is_active) {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(companyId,name,phoneNumber,address,gender,salary,date,departmentId,is_active));
 		
+	}
+
+	public int deleteEmployee(String name) {
+		return employeePayrollDBService.deleteEmployee(name, this.employeePayrollList);
 	}
 
 } 

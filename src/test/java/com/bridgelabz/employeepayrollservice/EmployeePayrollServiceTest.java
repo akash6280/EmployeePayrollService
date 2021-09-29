@@ -1,5 +1,6 @@
 package com.bridgelabz.employeepayrollservice;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ import org.junit.Test;
 import com.bridgelabz.employeepayrollservice.EmployeePayrollService.I0Service;
 
 public class EmployeePayrollServiceTest {
-
+/*
     @Test
 	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
@@ -107,9 +108,17 @@ public class EmployeePayrollServiceTest {
 	public void givenNewEmployee_WhenAdded_ShouldSynWithDB() {
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
 		employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
-		employeePayrollService.addEmployeeToPayroll(1,"Clark",807650078,"Madurai",'M',70000.00,LocalDate.of(2021,01, 03));
+		employeePayrollService.addEmployeeToPayroll(1,"Clark",807650078,"Madurai",'M',70000.00,LocalDate.of(2021,01, 03),1,"true");
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Clark");
 		Assert.assertTrue(result);
 		}
+*/	
+	@Test
+	public void givenEmployeeName_WhenDeleted_ShouldBecomeInactive() {
+		EmployeePayrollService employeePayrollService = new EmployeePayrollService(new ArrayList<>()); 
+		employeePayrollService.readEmployeePayrollData(I0Service.DB_I0);
+		int result = employeePayrollService.deleteEmployee("Clark");
+		Assert.assertEquals(1, result);
+	}
    
 }

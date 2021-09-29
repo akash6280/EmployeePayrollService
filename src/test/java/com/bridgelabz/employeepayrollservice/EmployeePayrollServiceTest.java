@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.bridgelabz.employeepayrollservice.EmployeePayrollService.I0Service;
 
 public class EmployeePayrollServiceTest {
-/*
+
     @Test
 	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount(){
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService();
@@ -112,7 +112,7 @@ public class EmployeePayrollServiceTest {
 		boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Clark");
 		Assert.assertTrue(result);
 		}
-*/	
+	
 	@Test
 	public void givenEmployeeName_WhenDeleted_ShouldBecomeInactive() {
 		EmployeePayrollService employeePayrollService = new EmployeePayrollService(new ArrayList<>()); 
